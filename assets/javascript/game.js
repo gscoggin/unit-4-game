@@ -1,19 +1,65 @@
+var targetNumber;
+var diamondNumber;
+var emeraldNumber;
+var topazNumber;
+var sapphireNumber;
+var userGuess; 
+var wins = 0;
+var loses = 0;
 
-var targetNumber = Math.floor((Math.random() * 100) + 1);
-console.log(targetNumber);
-
-function gameReset() {
-  document.getElementById("number-to-guess").innerHTML = targetNumber;
+//randomly sets a target number at the start of the game
+function gameStart() {
+  targetNumber = Math.floor((Math.random() * 120) + 19);
+  console.log(targetNumber);
+  diamondNumber = Math.floor((Math.random() * 12) + 1);
+  console.log(diamondNumber);
+  emeraldNumber = Math.floor((Math.random() * 12) + 1);
+  console.log(emeraldNumber);
+  topazNumber = Math.floor((Math.random() * 12) + 1);
+  console.log(topazNumber);
+  sapphireNumber = Math.floor((Math.random() * 12) + 1);
+  console.log(sapphireNumber);
+  //Set a place holder variable for the user guess
+  userGuess = 0;
+  $("#number-to-guess").text(targetNumber);
+  $("#diamond").attr("value", diamondNumber);
+  $("#emerald").attr("value", emeraldNumber);
+  $("#topaz").attr("value", topazNumber);
+  $("#sapphire").attr("value", sapphireNumber);
+  $("#userGuess").empty();
+  $("#gameStatus").empty();
 }
 
-//document.getElementById("crystals").addEventListener("click", function(){
-//  alert("Hello World!");
-//});
+function resetGame () {
+  $("#userGuess").empty();
+  $("#gameStatus").empty();
+}
 
-$( "#crystals1 #crystals2" ).on( "click", function() {
-  alert("Hello World!");
-});
+$(".crystal").on("click",function () {
+  var number = ($(this).attr("value"));
+  if (userGuess <= targetNumber) {
+  userGuess += parseInt(number);
+  console.log(userGuess);
+  $("#userGuess").text(userGuess);
+  if (userGuess === targetNumber) {
+    $("#gameStatus").text("You win!");
+    wins++;
+    $("#wins").text(parseInt(wins));
+    gameStart();
+  }
+  else if (userGuess >= targetNumber) {
+    $("#gameStatus").text("You lose!");
+    loses++;
+    $("#loses").text(parseInt(loses));
+    gameStart();
+  }  
+}   
+})
+
+gameStart();
+
+//game reset 
+resetGame();
 
 
-gameReset();
 
