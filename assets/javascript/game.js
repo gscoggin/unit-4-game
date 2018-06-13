@@ -45,13 +45,13 @@ $(".crystal").on("click",function () {
     $("#gameStatus").text("You win!");
     wins++;
     $("#wins").text(parseInt(wins));
-    gameStart();
+    setTimeout(gameStart, 1000 * 1);
   }
   else if (userGuess >= targetNumber) {
     $("#gameStatus").text("You lose!");
     loses++;
     $("#loses").text(parseInt(loses));
-    gameStart();
+    setTimeout(gameStart, 1000 * 1);
   }  
 }   
 })
