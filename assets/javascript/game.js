@@ -1,65 +1,86 @@
+//###############################################
+// Set global variables for crystal game 
+//###############################################
 var targetNumber;
 var diamondNumber;
 var emeraldNumber;
 var topazNumber;
 var sapphireNumber;
-var userGuess; 
+var userGuess;
 var wins = 0;
 var loses = 0;
+var winAudio = new Audio('assets/audio/chaChing.mp3');
+console.log(winAudio);
+var loseAudio = new Audio('assets/audio/sadLose.mp3');
+console.log(loseAudio);
 
-//randomly sets a target number at the start of the game
+//###############################################
+// Functions for crystal game 
+//###############################################
+
+// gameStart randomly sets a targetNumber, crystal numbers and resets userGuess
 function gameStart() {
-  targetNumber = Math.floor((Math.random() * 120) + 19);
-  console.log(targetNumber);
-  diamondNumber = Math.floor((Math.random() * 12) + 1);
-  console.log(diamondNumber);
-  emeraldNumber = Math.floor((Math.random() * 12) + 1);
-  console.log(emeraldNumber);
-  topazNumber = Math.floor((Math.random() * 12) + 1);
-  console.log(topazNumber);
-  sapphireNumber = Math.floor((Math.random() * 12) + 1);
-  console.log(sapphireNumber);
-  //Set a place holder variable for the user guess
-  userGuess = 0;
-  $("#number-to-guess").text(targetNumber);
-  $("#diamond").attr("value", diamondNumber);
-  $("#emerald").attr("value", emeraldNumber);
-  $("#topaz").attr("value", topazNumber);
-  $("#sapphire").attr("value", sapphireNumber);
-  $("#userGuess").empty();
-  $("#gameStatus").empty();
+    targetNumber = Math.floor((Math.random() * 120) + 19);
+    console.log(targetNumber);
+    diamondNumber = Math.floor((Math.random() * 12) + 1);
+    console.log(diamondNumber);
+    emeraldNumber = Math.floor((Math.random() * 12) + 1);
+    console.log(emeraldNumber);
+    topazNumber = Math.floor((Math.random() * 12) + 1);
+    console.log(topazNumber);
+    sapphireNumber = Math.floor((Math.random() * 12) + 1);
+    console.log(sapphireNumber);
+    userGuess = 0;
+    $("#number-to-guess").text(targetNumber);
+    $("#diamond").attr("value", diamondNumber);
+    $("#emerald").attr("value", emeraldNumber);
+    $("#topaz").attr("value", topazNumber);
+    $("#sapphire").attr("value", sapphireNumber);
+    $("#userGuess").empty();
+    $("#gameStatus").empty();
 }
 
-function resetGame () {
-  $("#userGuess").empty();
-  $("#gameStatus").empty();
+// resetGame resets the gameStatus and userGuess
+function resetGame() {
+    $("#userGuess").empty();
+    $("#gameStatus").empty();
 }
 
-$(".crystal").on("click",function () {
-  var number = ($(this).attr("value"));
-  if (userGuess <= targetNumber) {
-  userGuess += parseInt(number);
-  console.log(userGuess);
-  $("#userGuess").text(userGuess);
-  if (userGuess === targetNumber) {
-    $("#gameStatus").text("You win!");
-    wins++;
-    $("#wins").text(parseInt(wins));
-    setTimeout(gameStart, 1000 * 1);
-  }
-  else if (userGuess >= targetNumber) {
-    $("#gameStatus").text("You lose!");
-    loses++;
-    $("#loses").text(parseInt(loses));
-    setTimeout(gameStart, 1000 * 1);
-  }  
-}   
+// plays win audio 
+function audioWin() {
+    winAudio.play();
+}
+
+// plays loss audio 
+function audioLose() {
+    loseAudio.play();
+}
+
+// onclick event, and logic to check if the game is won or lost yet 
+$(".crystal").on("click", function() {
+    var number = ($(this).attr("value"));
+    if (userGuess <= targetNumber) {
+        userGuess += parseInt(number);
+        console.log(userGuess);
+        $("#userGuess").text(userGuess);
+        if (userGuess === targetNumber) {
+            $("#gameStatus").text("You win!");
+            audioWin();
+            wins++;
+            $("#wins").text(parseInt(wins));
+            setTimeout(gameStart, 1000 * 3);
+        } else if (userGuess >= targetNumber) {
+            $("#gameStatus").text("You lose!");
+            audioLose();
+            loses++;
+            $("#loses").text(parseInt(loses));
+            setTimeout(gameStart, 1000 * 5);
+        }
+    }
 })
 
+// Starts the game
 gameStart();
 
-//game reset 
+// Restarts the game
 resetGame();
-
-
-
