@@ -38,6 +38,7 @@ function gameStart() {
     $("#sapphire").attr("value", sapphireNumber);
     $("#userGuess").empty();
     $("#gameStatus").empty();
+    $("#crystalGroup").show();
 }
 
 // resetGame resets the gameStatus and userGuess
@@ -64,13 +65,16 @@ $(".crystal").on("click", function() {
         console.log(userGuess);
         $("#userGuess").text(userGuess);
         if (userGuess === targetNumber) {
-            $("#gameStatus").text("You win!");
+          $("#crystalGroup").hide();  
+          $("#gameStatus").text("You win!");
             audioWin();
             wins++;
             $("#wins").text(parseInt(wins));
             setTimeout(gameStart, 1000 * 3);
+            
         } else if (userGuess >= targetNumber) {
-            $("#gameStatus").text("You lose!");
+          $("#crystalGroup").hide();  
+          $("#gameStatus").text("You lose!");
             audioLose();
             loses++;
             $("#loses").text(parseInt(loses));
